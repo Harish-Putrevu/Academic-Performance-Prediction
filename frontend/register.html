@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Student Performance Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-auth">
+    <div class="bg-decoration" aria-hidden="true">
+      <span class="bg-icon bg-icon--books"><i class="fas fa-graduation-cap"></i></span>
+      <span class="bg-icon bg-icon--chart"><i class="fas fa-chart-line"></i></span>
+    </div>
+    <main class="auth-wrap">
+      <div class="card card--auth fade-in">
+        <div class="brand">
+          <div class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <rect x="8" y="40" width="48" height="8" rx="2" fill="#1d4ed8" />
+              <path d="M12 40v-20c8-4 16-4 20 0v20z" fill="#3b82f6" />
+              <path d="M32 40v-20c4-4 12-4 20 0v20z" fill="#3b82f6" />
+              <rect x="22" y="18" width="6" height="14" rx="1" fill="#22c55e" />
+              <rect x="30" y="14" width="6" height="18" rx="1" fill="#16a34a" />
+              <rect x="38" y="10" width="6" height="22" rx="1" fill="#0ea5e9" />
+            </svg>
+          </div>
+          <h1 class="brand-title">Student Performance Predictor</h1>
+        </div>
+        <div class="divider"></div>
+        <h2 class="form-title">Create Your Account</h2>
+        <form id="register-form" class="form-stack" novalidate>
+          <div class="alert alert--error hidden" id="register-error" role="alert"></div>
+          <div class="alert alert--success hidden" id="register-success" role="alert"></div>
+          <label class="field">
+            <span class="sr-only">Full Name</span>
+            <input
+              type="text"
+              name="name"
+              id="register-name"
+              placeholder="Full Name"
+              autocomplete="name"
+              required
+            />
+          </label>
+          <label class="field">
+            <span class="sr-only">Email</span>
+            <input
+              type="email"
+              name="email"
+              id="register-email"
+              placeholder="Email"
+              autocomplete="email"
+              required
+            />
+          </label>
+          <label class="field field--password">
+            <span class="sr-only">Password</span>
+            <input
+              type="password"
+              name="password"
+              id="register-password"
+              placeholder="Password"
+              autocomplete="new-password"
+              required
+              minlength="6"
+            />
+            <button type="button" class="toggle-pass" data-target="register-password" aria-label="Show password">
+              <i class="far fa-eye"></i>
+            </button>
+          </label>
+          <label class="field field--password">
+            <span class="sr-only">Confirm Password</span>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="register-confirm"
+              placeholder="Confirm Password"
+              autocomplete="new-password"
+              required
+              minlength="6"
+            />
+            <button type="button" class="toggle-pass" data-target="register-confirm" aria-label="Show password">
+              <i class="far fa-eye"></i>
+            </button>
+          </label>
+          <button type="submit" class="btn btn-gradient btn-block" id="register-submit">
+            <span class="btn-text">Register</span>
+            <span class="btn-loading hidden"><span class="spinner"></span></span>
+          </button>
+        </form>
+        <p class="footer-link">
+          Already have an account? <a href="login.html" class="link-strong">Login</a>
+        </p>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

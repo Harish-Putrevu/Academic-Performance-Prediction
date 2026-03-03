@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Student Performance Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-admin">
+    <div class="bg-decoration bg-decoration--admin" aria-hidden="true"></div>
+    <div class="admin-shell card fade-in">
+      <header class="admin-header">
+        <div class="admin-brand">
+          <div class="logo-mark tiny">
+            <svg viewBox="0 0 64 64" width="40" height="40">
+              <rect x="8" y="40" width="48" height="8" rx="2" fill="#1d4ed8" />
+              <path d="M12 40v-20c8-4 16-4 20 0v20z" fill="#3b82f6" />
+              <path d="M32 40v-20c4-4 12-4 20 0v20z" fill="#3b82f6" />
+              <rect x="22" y="18" width="6" height="14" rx="1" fill="#22c55e" />
+              <rect x="30" y="14" width="6" height="18" rx="1" fill="#16a34a" />
+              <rect x="38" y="10" width="6" height="22" rx="1" fill="#0ea5e9" />
+            </svg>
+          </div>
+          <span class="admin-title-text">Student Performance Predictor</span>
+        </div>
+        <div class="admin-user">
+          <span class="admin-badge"><i class="fas fa-user"></i> Professor</span>
+          <button type="button" class="btn btn-outline btn-sm" id="admin-logout-trigger">
+            Logout <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-body">
+        <aside class="admin-sidebar">
+          <nav class="side-nav">
+            <a href="dashboard.html" class="side-link"><i class="fas fa-house"></i> Dashboard</a>
+            <span class="side-link active"><i class="fas fa-user-graduate"></i> Manage Students</span>
+            <a href="#" class="side-link disabled"><i class="fas fa-chart-bar"></i> Reports</a>
+            <a href="#" class="side-link disabled"><i class="fas fa-gear"></i> Settings</a>
+            <a href="#" class="side-link disabled"><i class="fas fa-circle-question"></i> Help</a>
+          </nav>
+        </aside>
+        <div class="admin-main">
+          <h2 class="page-heading">Manage Students</h2>
+          <div class="toolbar">
+            <label class="field field--search">
+              <span class="input-icon"><i class="fas fa-magnifying-glass"></i></span>
+              <input type="search" id="admin-search" placeholder="Search students..." autocomplete="off" />
+            </label>
+            <button type="button" class="btn btn-gradient btn-sm" id="btn-add-student" disabled title="Use student registration">
+              <i class="fas fa-plus"></i> Add Student
+            </button>
+          </div>
+          <div class="alert alert--error hidden" id="admin-error"></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Subjects</th>
+                  <th>Predicted Grade</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-table-body"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <span id="admin-pagination-info">Showing 0 entries</span>
+            <div class="pager" id="admin-pager"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="admin-logout-modal" role="dialog" aria-modal="true">
+      <div class="modal card">
+        <div class="modal-icon modal-icon--danger"><i class="fas fa-lock"></i></div>
+        <h2 class="modal-title">Logout Confirmation</h2>
+        <p class="modal-text">Are you sure you want to logout?</p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-gradient" id="admin-logout-cancel">Cancel</button>
+          <button type="button" class="btn btn-danger" id="admin-logout-confirm">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="edit-modal" role="dialog" aria-modal="true">
+      <div class="modal card modal--wide">
+        <h2 class="modal-title">Edit Student Record</h2>
+        <form id="edit-form" class="form-stack">
+          <input type="hidden" id="edit-id" />
+          <label class="field">
+            <span class="field-label">Attendance %</span>
+            <input type="number" id="edit-attendance" min="0" max="100" step="0.1" required />
+          </label>
+          <label class="field">
+            <span class="field-label">Internal Marks</span>
+            <input type="number" id="edit-marks" min="0" max="100" step="0.1" required />
+          </label>
+          <label class="field field--select">
+            <span class="field-label">Previous Grade</span>
+            <select id="edit-prev-grade" required>
+              <option value="O">O</option>
+              <option value="A+">A+</option>
+              <option value="A">A</option>
+              <option value="B+">B+</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="F">F</option>
+            </select>
+          </label>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline" id="edit-cancel">Cancel</button>
+            <button type="submit" class="btn btn-gradient">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

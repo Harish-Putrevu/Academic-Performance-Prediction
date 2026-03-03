@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Academic Assistant Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body class="page-acad">
+    <div class="neo-bg-glow" aria-hidden="true"></div>
+    <div class="acad-app">
+      <aside class="acad-sidebar" aria-label="Main navigation">
+        <div class="acad-brand">
+          <div class="logo-mark tiny"><i class="fas fa-brain"></i></div>
+          <div class="acad-brand-text">
+            <span class="acad-brand-title">AI Mentor</span>
+            <span class="acad-brand-sub">Student Performance Predictor</span>
+          </div>
+        </div>
+        <nav class="acad-nav">
+          <button type="button" class="acad-nav-btn active" data-panel="dashboard" data-title="Dashboard"><i class="fas fa-gauge-high"></i> Dashboard</button>
+          <button type="button" class="acad-nav-btn" data-panel="attendance" data-title="Attendance Analytics"><i class="fas fa-user-check"></i> Attendance</button>
+          <button type="button" class="acad-nav-btn" data-panel="marks" data-title="Marks Intelligence"><i class="fas fa-chart-pie"></i> Marks</button>
+          <button type="button" class="acad-nav-btn" data-panel="prediction" data-title="Smart Prediction"><i class="fas fa-sparkles"></i> Prediction</button>
+          <button type="button" class="acad-nav-btn" data-panel="ai" data-title="AI Assistant"><i class="fas fa-robot"></i> AI Assistant</button>
+          <button type="button" class="acad-nav-btn" data-panel="recommendations" data-title="AI Recommendations"><i class="fas fa-book-open-reader"></i> AI Recommendations</button>
+          <button type="button" class="acad-nav-btn" data-panel="notifications" data-title="Smart Alerts"><i class="fas fa-bell"></i> Notifications</button>
+          <button type="button" class="acad-nav-btn" data-panel="admin" data-title="Professor Dashboard"><i class="fas fa-user-shield"></i> Professor</button>
+        </nav>
+        <button type="button" class="acad-nav-btn acad-nav-btn--logout" id="acad-logout"><i class="fas fa-right-from-bracket"></i> Logout</button>
+      </aside>
+
+      <main class="acad-main">
+        <header class="acad-topbar glass">
+          <div>
+            <h1 class="acad-page-title" id="acad-page-title">Dashboard</h1>
+            <p class="acad-breadcrumb" id="acad-welcome-line">Welcome back</p>
+          </div>
+          <div class="acad-right-tools">
+            <button type="button" class="notif-bell" id="notif-bell" aria-label="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notif-count hidden" id="notif-count">0</span>
+            </button>
+            <div class="notif-dropdown hidden" id="notif-dropdown"></div>
+            <div class="acad-user-chip"><i class="fas fa-user-graduate"></i> <span id="acad-user-name">Student</span></div>
+          </div>
+        </header>
+
+        <div class="acad-content">
+          <section class="acad-panel" id="panel-dashboard" data-panel="dashboard">
+            <div class="stat-grid">
+              <div class="stat-card glass"><span class="stat-indicator stat-indicator--cyan"></span><span class="stat-label">Average Attendance</span><strong class="stat-value" id="stat-avg-att">0%</strong></div>
+              <div class="stat-card glass"><span class="stat-indicator stat-indicator--blue"></span><span class="stat-label">Average Total</span><strong class="stat-value" id="stat-avg-marks">0</strong></div>
+              <div class="stat-card glass"><span class="stat-indicator stat-indicator--green"></span><span class="stat-label">Predicted Grade</span><strong class="stat-value" id="stat-grade">C</strong></div>
+              <div class="stat-card glass" id="risk-chip"><span class="stat-indicator stat-indicator--red"></span><span class="stat-label">Risk Level</span><strong class="stat-value" id="stat-risk">High</strong></div>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="card acad-card glass">
+                <h2 class="acad-card-title">Overall Progress Ring</h2>
+                <div class="chart-container chart-container--small"><canvas id="chart-overall-ring"></canvas></div>
+              </div>
+              <div class="card acad-card glass expected-card" id="expected-outcome">
+                <h2 class="acad-card-title">Expected Outcome</h2>
+                <p class="expected-line" id="expected-base">Current trend: Grade C</p>
+                <p class="expected-line expected-line--bright" id="expected-improved">With +10 marks: Grade B+</p>
+              </div>
+              <div class="card acad-card glass">
+                <h2 class="acad-card-title">AI Overall Summary</h2>
+                <div id="overall-ai-block" class="ai-summary">Analyzing your global performance...</div>
+              </div>
+            </div>
+
+            <div class="card acad-card glass">
+              <div class="split-head">
+                <h2 class="acad-card-title">Subject Heatmap (Click for AI insight)</h2>
+                <button type="button" class="btn btn-gradient btn-sm" id="regenerate-demo-btn">Regenerate Demo Data</button>
+              </div>
+              <div class="subject-heatmap" id="subject-heatmap"></div>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-attendance" data-panel="attendance">
+            <div class="card acad-card glass chart-card">
+              <h2 class="acad-card-title">Attendance Distribution</h2>
+              <div class="chart-container"><canvas id="chart-attendance"></canvas></div>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-marks" data-panel="marks">
+            <div class="card acad-card glass chart-card">
+              <h2 class="acad-card-title">Marks Split (Internal + External)</h2>
+              <div class="chart-container chart-container--pie"><canvas id="chart-marks"></canvas></div>
+            </div>
+            <div class="card acad-card glass chart-card">
+              <h2 class="acad-card-title">Subject Performance Radar</h2>
+              <div class="chart-container"><canvas id="chart-radar"></canvas></div>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-prediction" data-panel="prediction">
+            <div class="card acad-card glass">
+              <h2 class="acad-card-title">Predict Next Exam Outcome</h2>
+              <form id="prediction-form" class="form-stack" novalidate>
+                <div class="alert alert--error hidden" id="dash-error"></div>
+                <label class="field field--icon"><span class="input-icon"><i class="far fa-calendar-check"></i></span><input type="number" name="attendance" id="input-attendance" placeholder="Attendance Percentage" min="0" max="100" step="0.1" required /></label>
+                <label class="field field--icon"><span class="input-icon"><i class="fas fa-calculator"></i></span><input type="number" name="internalMarks" id="input-marks" placeholder="Internal Marks (Out of 60)" min="0" max="60" step="0.1" required /></label>
+                <label class="field field--icon field--select">
+                  <span class="input-icon"><i class="far fa-file-alt"></i></span>
+                  <select name="previousGrade" id="input-prev-grade" required>
+                    <option value="" disabled selected>Previous Semester Grade</option>
+                    <option value="O">O</option><option value="A+">A+</option><option value="A">A</option><option value="B+">B+</option><option value="B">B</option><option value="C">C</option>
+                  </select>
+                  <span class="select-caret"><i class="fas fa-chevron-down"></i></span>
+                </label>
+                <button type="submit" class="btn btn-gradient btn-block" id="submit-predict"><span class="btn-text">Generate Prediction</span><span class="btn-loading hidden"><span class="spinner"></span></span></button>
+              </form>
+            </div>
+            <div class="hidden" id="section-result">
+              <div class="card acad-card glass">
+                <p class="predict-line">Predicted Grade: <strong id="result-grade">B</strong></p>
+                <p class="muted" id="result-performance">Good Performance</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-ai" data-panel="ai">
+            <div class="card acad-card glass">
+              <h2 class="acad-card-title">AI Mentor Chatbot</h2>
+              <div id="ai-chat-window" class="ai-chat-window"></div>
+              <form id="ai-form" class="inline-form">
+                <input type="text" id="ai-input" placeholder="Ask anything. Academic or non-academic..." />
+                <button type="submit" class="btn btn-gradient btn-sm">Send</button>
+              </form>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-recommendations" data-panel="recommendations">
+            <div class="card acad-card glass">
+              <h2 class="acad-card-title">AI Recommendations</h2>
+              <p class="acad-muted">Subject-wise curated learning resources with videos and articles.</p>
+              <div id="recommendations-grid" class="recommendations-grid"></div>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-notifications" data-panel="notifications">
+            <div class="card acad-card glass">
+              <h2 class="acad-card-title">Smart Notifications</h2>
+              <ul class="suggestion-list" id="notifications-list"></ul>
+            </div>
+          </section>
+
+          <section class="acad-panel hidden" id="panel-admin" data-panel="admin">
+            <div class="card acad-card glass">
+              <h2 class="acad-card-title">Professor Dashboard</h2>
+              <p class="acad-muted" id="admin-panel-note">Only professor users can access this panel.</p>
+              <div class="alert alert--error hidden" id="dash-admin-error"></div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Average Marks</th>
+                      <th>Risk Level</th>
+                      <th>Weak Subjects</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-admin-table"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay hidden" id="subject-modal" role="dialog" aria-modal="true" aria-labelledby="subject-modal-title">
+      <div class="modal card modal--wide glass">
+        <h2 id="subject-modal-title" class="modal-title">Subject AI Insight</h2>
+        <div id="subject-modal-content"></div>
+        <div class="modal-actions"><button type="button" class="btn btn-gradient" id="subject-modal-close">Close</button></div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="prof-modal" role="dialog" aria-modal="true" aria-labelledby="prof-modal-title">
+      <div class="modal card modal--wide glass">
+        <h2 id="prof-modal-title" class="modal-title">Student Details</h2>
+        <div id="prof-modal-content"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="prof-modal-cancel">Close</button>
+          <button type="button" class="btn btn-gradient" id="prof-modal-save">Save Marks</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="logout-modal" role="dialog" aria-modal="true" aria-labelledby="logout-title">
+      <div class="modal card glass">
+        <h2 id="logout-title" class="modal-title">Logout Confirmation</h2>
+        <p class="modal-text">Are you sure you want to logout?</p>
+        <div class="modal-actions"><button type="button" class="btn btn-gradient" id="logout-cancel">Cancel</button><button type="button" class="btn btn-danger" id="logout-confirm">Logout</button></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
